@@ -1,0 +1,28 @@
+name: Lint HTML & CSS
+
+on:
+  pull_request:
+    branches: [develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install linters
+        run: |
+          npm install -g htmlhint stylelint stylelint-config-standard
+
+      - name: Lint HTML
+        run: htmlhint "src/**/*.html"
+
+      - name: Lint CSS
+        run: stylelint "styles/**/*.css"
